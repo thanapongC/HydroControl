@@ -47,6 +47,8 @@ $name = $_SESSION["name"];
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -62,32 +64,33 @@ $name = $_SESSION["name"];
 
 <body>
 
-    <div id="wrapper">
+    <div id="wrapper" style="background-color: #00BF9A; font-family: 'Vollkorn', serif;">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; background-color: #00BF9A;" >
+            <div class="navbar-header" style="background-color: #00BF9A;">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" >
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">HYDRO-DESHBROAD PANEL</a>
+                <a class="navbar-brand" href="index.php"><font color="#FAFAFA">HYDRO-DESHBROAD PANEL</font></a>
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right">
+            <ul class="nav navbar-top-links navbar-right" >
 
                 <!-- /.dropdown -->
                 <li class="dropdown">
 
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>
-                        <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw" style="color:white"></i>
+                        <i class="fa fa-caret-down" style="color:white"></i>
                     </a>
+                    <!-- data-toggle="modal" data-target="#watersensor" -->
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile &nbsp; | &nbsp; <span><?php echo $_SESSION["name"]; ?></span> </a>
+                        <li><a href="" data-toggle="modal" data-target="#userprofile"><i class="fa fa-user fa-fw"></i> User Profile &nbsp; | &nbsp; <span><?php echo $_SESSION["name"]; ?></span> </a>
                         </li>
                         <li><a href="../php/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
@@ -102,7 +105,7 @@ $name = $_SESSION["name"];
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="index.php"><i class="fa fa-dashboard fa-fw" style="color:black;"></i> <font color="black"> Dashboard</font></a>
                         </li>
 
                     </ul>
@@ -112,7 +115,7 @@ $name = $_SESSION["name"];
             <!-- /.navbar-static-side -->
         </nav>
 
-        <div id="page-wrapper">
+        <div id="page-wrapper"><br>
             <div class="row">
 
  <!-- start air sensor -->
@@ -130,14 +133,13 @@ $name = $_SESSION["name"];
                         $numwater = mysqli_num_rows($resultwater);
                              ?>
 
-                                <div class="panel panel-default">
-                                <div class="panel-heading">
-                                <i class="fa fa-tint fa-fw"></i> Water Sensor
+                                <div class="panel panel-default" >
+                                <div class="panel-heading" style="background-color: #00BF9A;">
+                                <i class="fa fa-tint fa-fw" style="color:white"></i> <font color="#FAFAFA">Water Sensor</font>
                                 <div class="pull-right">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="modal" data-target="#watersensor">
-                                     Add Realtime Device
-                                </div>
-                              </div>
+                                <button type="button" class="btn btn-warning btn-circle" name="adddevice" data-toggle="modal" data-target="#watersensor"><i class="fa fa-plus-circle"></i>
+                              </div><hr>
+                            </div>
                                 <div class="row"  style='display: flex; justify-content: center;flex-wrap: wrap;'>
                                                <?php $i = 0;while ($resultrealtimewater = mysqli_fetch_array($queryrealtimewater, MYSQLI_ASSOC)) {?>
                                                <div class="col-lg-2 col-xs-10">
@@ -145,8 +147,8 @@ $name = $_SESSION["name"];
                                                    <a href="../php/delete_confirm2.php?portid=<?php echo $resultrealtimewater["portid"]; ?>" onclick="return confirm('คุณต้องการลบข้อมูล ?');">
 
                                                    <div class="panel panel-default">
-                                                      <div class="panel-heading">
-                                                  <center> <?php echo $resultrealtimewater["devicename"]; ?> <center>
+                                                      <div class="panel-heading" style="background-color: #00BF9A;">
+                                                  <center><font color="#FAFAFA"> <?php echo $resultrealtimewater["devicename"]; ?></font> <center>
 
                                                  </div><br>
 
@@ -170,8 +172,8 @@ $name = $_SESSION["name"];
 
                             <!-- /end water sensor -->
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-soundcloud fa-fw"></i> Air Sensor
+                        <div class="panel-heading" style="background-color: #00BF9A;">
+                            <i class="fa fa-soundcloud fa-fw" style="color:white"></i> <font color="#FAFAFA">Air Sensor</font>
                         </div>
                              <div class="row"  style='display: flex; justify-content: center;flex-wrap: wrap;'>
                               <?php $i = 0;while ($resultrealtimeair = mysqli_fetch_array($queryrealtimeair, MYSQLI_ASSOC)) {?>
@@ -180,8 +182,8 @@ $name = $_SESSION["name"];
                                  <a href="../php/delete_confirm2.php?portid=<?php echo $resultrealtimeair["portid"]; ?>" onclick="return confirm('คุณต้องการลบข้อมูล ?');">
 
                                  <div class="panel panel-default">
-                        <div class="panel-heading">
-                      <center><?php echo $resultrealtimeair["devicename"]; ?></center>
+                        <div class="panel-heading" style="background-color: #00BF9A;">
+                      <center><font color="#FAFAFA"><?php echo $resultrealtimeair["devicename"]; ?></font></center>
 
                         </div><br>
 
@@ -215,6 +217,48 @@ $name = $_SESSION["name"];
 
 
  </div>
+ <div class="panel panel-default">
+   <div class="panel-heading" style="background-color: #00BF9A;">
+   <i class="fa fa-power-off fa-fw" style="color:white"></i> <font color="#FAFAFA">ON-OFF Device Panel</font>
+   <div class="pull-right">
+   <button type="button" class="btn btn-warning btn-circle" data-toggle="modal" data-target="#onoffdevice"><i class="fa fa-plus-circle"></i>
+   </div><hr>
+ </div>
+     <div class="panel-body">
+         <div class="list-group">
+         <?php
+           $sql = "SELECT * FROM tbl_lamp WHERE userid='{$_SESSION["userid"]}'";
+           $query = mysqli_query($conn, $sql);
+         ?>
+         <?php $i = 0;while ($resultonoff = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
+             <div class="row">
+
+
+
+                 <div class="col-lg-7 col-xs-6">
+
+                     <a href="../php/delete_confirm.php?portid=<?php echo $resultonoff["portid"]; ?>" onclick="return confirm('คุณต้องการลบข้อมูล ?');">
+                          <font color="black"><?php echo $resultonoff["lampname"]; ?></font>
+                     </a>
+
+                 </div>
+                 <div class="col-lg-2 col-xs-3">
+                       <button id="led-on" onclick="on<?php echo $resultonoff["keyid"]; ?>();"type="button" class="btn btn-success btn-circle btn-lg" id="timestart<?php echo $resultset["keyid"];?>"  name="timestart"><i class="fa fa-power-off"></i>
+                 </div>
+                 <div class="col-lg-2 col-xs-3">
+                     <button id="led-off"  type="button"  onclick="off<?php echo $resultonoff["keyid"]; ?>();" class="btn btn-danger btn-circle btn-lg" id="timestart<?php echo $resultset["keyid"];?>"  name="timestart"><i class="fa fa-power-off"></i>
+                 </div>
+         </div><hr>
+
+
+          <?php $i++;?>
+          <?php }?>
+
+         </div>
+         <!-- /.list-group -->
+     </div>
+     <!-- /.panel-body -->
+ </div>
                 </div>
                 <!-- /.col-lg-8 -->
 
@@ -227,8 +271,8 @@ $name = $_SESSION["name"];
                   $numsoil = mysqli_num_rows($resultsoil); ?>
 
                       <div class="panel panel-default">
-                      <div class="panel-heading">
-                      <i class="fa fa-pagelines fa-fw"></i> Soil Sensor
+                      <div class="panel-heading" style="background-color: #00BF9A;">
+                      <i class="fa fa-pagelines fa-fw" style="color:white"></i> <font color="#FAFAFA">Soil Sensor</font>
                     </div>
                       <div class="row" style='display: flex; justify-content: center;flex-wrap: wrap;'>
 
@@ -237,8 +281,8 @@ $name = $_SESSION["name"];
                                        <a href="../php/delete_confirm2.php?portid=<?php echo $resultrealtimesoil["portid"]; ?>" onclick="return confirm('คุณต้องการลบข้อมูล ?');">
 
                                        <div class="panel panel-default">
-                                          <div class="panel-heading">
-                                              <center><?php echo $resultrealtimesoil["devicename"]; ?><center>
+                                          <div class="panel-heading" style="background-color: #00BF9A;">
+                                              <center><font color="#FAFAFA"><?php echo $resultrealtimesoil["devicename"]; ?></center><center>
 
                                          </div><br>
 
@@ -269,54 +313,11 @@ $name = $_SESSION["name"];
                   <!-- /end soil sensor -->
 
 
+
+
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-power-off fa-fw"></i>   On-Off Time-Set Panel
-                            <div class="pull-right">
-                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="modal" data-target="#onoffdevice">
-                                 Add ON-OFF Device
-                            </div>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="list-group">
-                            <?php
-                              $sql = "SELECT * FROM tbl_lamp WHERE userid='{$_SESSION["userid"]}'";
-                              $query = mysqli_query($conn, $sql);
-                            ?>
-                            <?php $i = 0;while ($resultonoff = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
-                                <div class="row">
-
-
-
-                                    <div class="col-lg-7 col-xs-6">
-
-                                        <a href="../php/delete_confirm.php?portid=<?php echo $resultonoff["portid"]; ?>" onclick="return confirm('คุณต้องการลบข้อมูล ?');">
-                                            <?php echo $resultonoff["lampname"]; ?>
-                                        </a>
-
-                                    </div>
-                                    <div class="col-lg-2 col-xs-3">
-                                          <button id="led-on" onclick="on<?php echo $resultonoff["keyid"]; ?>();"type="button" class="btn btn-success btn-circle btn-lg" id="timestart<?php echo $resultset["keyid"];?>"  name="timestart"><i class="fa fa-power-off"></i>
-                                    </div>
-                                    <div class="col-lg-2 col-xs-3">
-                                        <button id="led-off"  type="button"  onclick="off<?php echo $resultonoff["keyid"]; ?>();" class="btn btn-danger btn-circle btn-lg" id="timestart<?php echo $resultset["keyid"];?>"  name="timestart"><i class="fa fa-power-off"></i>
-                                    </div>
-                            </div><hr>
-
-
-                             <?php $i++;?>
-                             <?php }?>
-
-                            </div>
-                            <!-- /.list-group -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-clock-o fa-fw"></i> Devices Time Setting
+                        <div class="panel-heading" style="background-color: #00BF9A;">
+                            <i class="fa fa-clock-o fa-fw" style="color:white"></i> <font color="#FAFAFA">Devices Time Setting</font>
                         </div>
                         <?php
                               $sqlset = "SELECT * FROM tbl_lamp WHERE userid='{$_SESSION["userid"]}'";
@@ -328,15 +329,15 @@ $name = $_SESSION["name"];
 
                         <div class="row">
 
-                          <div class="col-lg-3 col-xs-2">
+                          <div class="col-lg-3 col-xs-3">
 
 
-                                  <?php echo $resultset["lampname"]; ?>
+                                 <font color="black">  <?php echo $resultset["lampname"]; ?></font>
 
 
                           </div>
 
-                          <div class="col-lg-1 col-xs-2">
+                          <div class="col-lg-1 col-xs-1">
                             <div class="row">
                               <div class="col-lg-6 col-xs-6">
                               <img src="../img/timen.jpg">
@@ -416,12 +417,12 @@ $name = $_SESSION["name"];
          <form action="../php/insertrealtime-device.php" method="post">
                                                        <div class="form-group">
                                                          <label for="devicename" ><font color="red">*</font>Device Name :</label><br>
-                                                             <input class="form-control"  type="text" name="devicename" size="10">
+                                                             <input class="form-control"  type="text" name="devicename" size="10"  placeholder="Enter Device Name" >
                                                         </div>
                                                      <div class="form-group">
                                                          <label for="deviceid"><font color="red">*</font>Select Device</label><br>
                                                          <font color="black">
-                                               <select type="text" name="deviceid" required autofocus size>
+                                               <select class="form-control"  type="text" name="deviceid" required>
 
                                                   <!-- PHP -->
 
@@ -434,7 +435,7 @@ $name = $_SESSION["name"];
                                                </div>
                                                <div class="form-group">
                                                <label for="deviceid"><font color="red">*</font>Select Device Type</label><br>
-                                           <select type="text" name="txtdevicetype" required autofocus size>
+                                           <select  class="form-control"  type="text" name="txtdevicetype" required>
                                                <option value="Water">Water Sensor</option>
                                                <option value="Soil">Soil Sensor</option>
                                                <option value="Air">Air Sensor</option>
@@ -499,6 +500,74 @@ $name = $_SESSION["name"];
     </div>
    </div>
    <!-- / End Model -->
+
+
+      <div class="modal fade" id="userprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+       <div class="modal-dialog modal-dialog-centered" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLongTitle">Your Profile</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <div class="modal-body">
+             <form action="../php/page_saveuser.php" name="frmediteuser" method="post">
+
+              <div class="form-group">
+                   <label for="devicename" >User ID :</label>
+                          <input type="text" name="userid" value="<?php echo $result["userid"]?>"  class="form-control" disabled>
+              </div>
+
+              <div class="form-group">
+                   <label for="devicename" >Username :</label>
+                          <input type="text" name="username" value="<?php echo $result["username"];?>"  class="form-control" disabled>
+               </div>
+              <div class="form-group">
+                  <label for="devicename" >Password :</label>
+                         <input type="text" name="password" value="<?php echo $result["password"];?>"  class="form-control" disabled>
+             </div>
+              <div class="form-group">
+                  <label for="devicename" >Name :</label>
+                         <input type="text" name="name" value="<?php echo $result["name"];?>"  class="form-control" disabled>
+              </div>
+              <div class="form-group">
+                   <label for="devicename" >API-Key :</label>
+                          <input type="text" name="apiKey" value="<?php echo $result["apiKey"];?>"  class="form-control" disabled>
+              </div>
+              <div class="form-group">
+                   <label for="devicename" >authDomain :</label>
+                          <input type="text" name="authDomain" value="<?php echo $result["authDomain"];?>"  class="form-control" disabled>
+              </div>
+              <div class="form-group">
+                   <label for="devicename" >databaseURL :</label>
+                          <input type="text" name="databaseURL" value="<?php echo $result["databaseURL"];?>"  class="form-control" disabled>
+              </div>
+              <div class="form-group">
+                   <label for="devicename" >projectId :</label>
+                          <input type="text" name="projectId" value="<?php echo $result["projectId"];?>"  class="form-control" disabled>
+              </div>
+              <div class="form-group">
+                   <label for="devicename" >storageBucket :</label>
+                          <input type="text" name="storageBucket" value="<?php echo $result["storageBucket"];?>"  class="form-control" disabled>
+              </div>
+              <div class="form-group">
+                   <label for="devicename" >messagingSenderId :</label>
+                          <input type="text" name="messagingSenderId" value="<?php echo $result["messagingSenderId"];?>"  class="form-control" disabled>
+              </div>
+
+           <!-- <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <?php echo $result3["devicetype"]; ?>
+             <button type="submit" class="btn btn-primary"  onclick="return confirm('คุณต้องการบันทึกข้อมูล ?');">Save changes</button>
+           </div> -->
+           </form>
+         </div>
+       </div>
+      </div>
+      <!-- / End Model -->
+
+
 
 </body>
 

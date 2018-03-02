@@ -10,7 +10,7 @@
 
 	$strPortID = $_GET["portid"];
 	$sql = "DELETE FROM tbl_realtime
-			
+
 			WHERE portid = '".$strPortID."' ";
 
 	$query = mysqli_query($conn,$sql);
@@ -23,7 +23,7 @@
     window.location = "../pages/index.php";
 
 </script>
-		<?php 
+		<?php
 }
 
 	mysqli_close($conn);
