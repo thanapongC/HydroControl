@@ -68,18 +68,19 @@ $name = $_SESSION["name"];
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; background-color: #00BF9A;" >
-            <div class="navbar-header" style="background-color: #00BF9A;">
+            <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" >
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php"><font color="#FAFAFA">HYDRO-DESHBROAD PANEL</font></a>
+
+                <a class="navbar-brand" href="index.php"> <i class="fa fa-pagelines fa-fw" style="color:white"></i>  <font color="#FAFAFA">HYDRO PANEL</font></a>
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right" >
+            <ul class="nav navbar-top-links navbar-right"  style="left:0">
 
                 <!-- /.dropdown -->
                 <li class="dropdown">
@@ -105,7 +106,7 @@ $name = $_SESSION["name"];
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="index.php"><i class="fa fa-dashboard fa-fw" style="color:black;"></i> <font color="black"> Dashboard</font></a>
+                            <a href="index.php"></i> <font color="black"> Home</font></a>
                         </li>
 
                     </ul>

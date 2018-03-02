@@ -64,7 +64,7 @@ body {
   margin-left: -123px;
 }
 .navbar-top-links .dropdown-user {
-  right: 0;
+  right: 200;
   left: auto;
 }
 .sidebar .sidebar-nav.navbar-collapse {
@@ -78,7 +78,7 @@ body {
   border-bottom: 1px solid #e7e7e7;
 }
 .sidebar ul li a.active {
-  background-color: #2ecc71;
+  background-color: #eeeeee;
 }
 .sidebar .arrow {
   float: right;
