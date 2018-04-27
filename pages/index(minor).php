@@ -114,69 +114,19 @@ $numstatoff  = mysqli_num_rows($resultstatoff ); ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.9/justgage.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-
-
-    <style>
-    .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {display:none;}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}</style>
-
 </head>
+<script>
 
+  var config = {
+    apiKey: "<?php echo $result["apiKey"]; ?>",
+    authDomain: "<?php echo $result["authDomain"]; ?>",
+    databaseURL: "<?php echo $result["databaseURL"]; ?>",
+    projectId: "<?php echo $result["projectId"]; ?>",
+    storageBucket: "<?php echo $result["storageBucket"]; ?>",
+    messagingSenderId: "<?php echo $result["messagingSenderId"]; ?>"
+  };
+  firebase.initializeApp(config);
+</script>
 <body>
 
     <div id="wrapper" style="background-color: #00BF9A; font-family: 'Vollkorn', serif;">
@@ -192,17 +142,6 @@ input:checked + .slider:before {
                 </button>
 
                 <a class="navbar-brand" href="index.php"> <i class="fa fa-pagelines fa-fw" style="color:white"></i>  <font color="#FAFAFA">GROW PANEL</font></a>
-                <a class="navbar-brand"><font color="#FAFAFA"> Owner: <?php echo $result["name"]; ?>  &nbsp; | &nbsp;
-                  <?php if($result["deviceID"] == 3){
-                  echo 'Aquapronic System';
-                }if($result["deviceID"] == 2){
-                  echo 'Basket Of Grow System';
-                }if($result["deviceID"] == 1){
-                  echo 'Hydropronic System';
-                }
-                ?>
-                </font></a>
-
             </div>
 
             <ul class="nav navbar-top-links navbar-right"  style="left:0">
@@ -214,7 +153,7 @@ input:checked + .slider:before {
                     </a>
                     <!-- data-toggle="modal" data-target="#watersensor" -->
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="" data-toggle="modal" data-target="#userprofile"><i class="fa fa-user fa-fw"></i> User Profile &nbsp; | &nbsp; <span><?php echo $result["name"]; ?></span> </a>
+                        <li><a href="" data-toggle="modal" data-target="#userprofile"><i class="fa fa-user fa-fw"></i> User Profile &nbsp; | &nbsp; <span><?php echo $_SESSION["name"]; ?></span> </a>
                         </li>
                         <li><a href="../php/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
@@ -283,17 +222,7 @@ input:checked + .slider:before {
                                               <center>
                                         </div>
                                           <br>
-                                          <?php
-                                          if($resultrealtimewater["keyid"] == 4){
-                                            echo '<center>
-                                          <label class="switch">
-                                              <label class="switch">
-                                                <input type="checkbox">
-                                                <span class="slider round"></span>
-                                              </label></center>';
-                                          }else{
-                                             echo "<div id='gauge" . $resultrealtimewater["keyid"] . "' class='200x160px'></div>";
-                                          }?>
+                                            <?php echo "<div id='gauge" . $resultrealtimewater["keyid"] . "' class='200x160px'></div>";?>
                                        </div>
                                     </div> &nbsp; &nbsp; &nbsp; &nbsp;
                                  <?php $i++; }?>
@@ -331,19 +260,8 @@ input:checked + .slider:before {
                                      </center>
                                   </div>
                                    <br>
-                                   <?php
-                                   if($resultrealtimeair["keyid"] == 8){
-                                     echo '<center>
-
-                                   <label class="switch">
-                                       <label class="switch">
-                                         <input type="checkbox">
-                                         <span class="slider round"></span>
-                                       </label></center>';
-                                   }else{
-                                      echo "<div id='gauge" . $resultrealtimeair["keyid"] . "' class='200x160px'>";
-                                       echo "</div>";
-                                     }?>
+                                     <?php echo "<div id='gauge" . $resultrealtimeair["keyid"] . "' class='200x160px'>";
+                                       echo "</div>";?>
                                    <br>
                               </div>
                             </div> &nbsp; &nbsp; &nbsp; &nbsp;
@@ -362,7 +280,7 @@ input:checked + .slider:before {
                        <div class="panel-heading" style="background-color: #00BF9A;">
                          <h4>
                            <i class="fa fa-power-off fa-fw" style="color:white"></i>
-                             <font color="#FAFAFA">ON-OFF Device Panel</font>
+                             <font color="#FAFAFA">ON-OFF Devices Panel</font>
                         </h4>
                        <hr>
                          <div style="text-align: right;">
@@ -371,13 +289,13 @@ input:checked + .slider:before {
                          </div>
                       </div>
                         <div class="panel-body">
+                          <?php
+                            if($numauto > 0 || $numsettime > 0 || $numsetmois > 0 || $numnovalue > 0){
+                              echo'<fieldset disabled="">';
+                            }?>
                           <div class="list-group">
                             <!-- PHP -->
                             <?php
-                            //    $sql = "SELECT * FROM tbl_lamp WHERE userid='{$_SESSION["userid"]}'";
-                            //    $query = mysqli_query($conn, $sql);
-                            //    $i = 0;while ($resultonoff = mysqli_fetch_array($query, MYSQLI_ASSOC))
-                            // {
                             $sql = "SELECT * FROM tbl_lamp WHERE userid='{$_SESSION["userid"]}'";
                             $query = mysqli_query($conn, $sql);
                             $i = 0;while ($resultonoff = mysqli_fetch_array($query, MYSQLI_ASSOC))
@@ -392,39 +310,57 @@ input:checked + .slider:before {
                             <!-- PHP -->
 
                               <div class="col-lg-6 col-xs-4" style="font-family: 'Poiret One', cursive;font-size:18px">
+
                                 <?php echo $resultonoff["lampname"]; ?>
                               </div>
                                 <div class="col-lg-2 col-xs-3">
                                   <script>
-
-                                  if("<?php echo $resultonoff["statdevice"];?>" == "on" && "<?php echo $resultonoff["keyid"];?>" == "1"){
-                                     firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v1').set("on");
-                                  }
-                                  if("<?php echo $resultonoff["statdevice"];?>" == "on" && "<?php echo $resultonoff["keyid"];?>" == "2"){
-                                     firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v2').set("on");
-                                  }
-                                  if("<?php echo $resultonoff["statdevice"];?>" == "on" && "<?php echo $resultonoff["keyid"];?>" == "3"){
-                                     firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v3').set("on");
-                                  }
-                                  if("<?php echo $resultonoff["statdevice"];?>" == "on" && "<?php echo $resultonoff["keyid"];?>" == "4"){
-                                     firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v4').set("on");
-                                  }
-                                  if("<?php echo $resultonoff["statdevice"];?>" == "on" && "<?php echo $resultonoff["keyid"];?>" == "5"){
-                                     firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay12v1').set("on");
-                                  }
-                                  if("<?php echo $resultonoff["statdevice"];?>" == "on" && "<?php echo $resultonoff["keyid"];?>" == "6"){
-                                     firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay12v2').set("on");
-                                  }
-                                  if("<?php echo $resultonoff["statdevice"];?>" == "on" && "<?php echo $resultonoff["keyid"];?>" == "7"){
-                                     firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay5v1').set("on");
-                                  }
-                                  if("<?php echo $resultonoff["statdevice"];?>" == "on" && "<?php echo $resultonoff["keyid"];?>" == "8"){
-                                     firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay5v2').set("on");
-                                  }
+                                  console.log("<?php echo $resultonoff["keyid"];?>")
+                                  console.log("<?php echo $resultonoff["statdevice"];?>")
+                                   if(("<?php echo $resultonoff["keyid"];?>" == '1') && ("<?php echo $resultonoff["statdevice"];?>" == "on")){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v1').set("on");
+                                   }else if(("<?php echo $resultonoff["keyid"];?>" == '1') && ("<?php echo $resultonoff["statdevice"];?>" == "off")){
+                                      firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v1').set("off");
+                                    }
+                                   if("<?php echo $resultonoff["keyid"];?>" == '2' && "<?php echo $resultonoff["statdevice"];?>" == "on"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v2').set("on");
+                                   }else if("<?php echo $resultonoff["keyid"];?>" == '2' && "<?php echo $resultonoff["statdevice"];?>" == "off"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v2').set("off");
+                                   }
+                                   if("<?php echo $resultonoff["keyid"];?>" == '3' && "<?php echo $resultonoff["statdevice"];?>" == "on"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v3').set("on");
+                                   }else if("<?php echo $resultonoff["keyid"];?>" == '3' && "<?php echo $resultonoff["statdevice"];?>" == "off"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v3').set("off");
+                                   }
+                                   if("<?php echo $resultonoff["keyid"];?>" == '4' && "<?php echo $resultonoff["statdevice"];?>" == "on"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v4').set("on");
+                                   }else if("<?php echo $resultonoff["keyid"];?>" == '4' && "<?php echo $resultonoff["statdevice"];?>" == "off"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v4').set("off");
+                                   }
+                                   if("<?php echo $resultonoff["keyid"];?>" == '5' && "<?php echo $resultonoff["statdevice"];?>" == "on"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay12v1').set("on");
+                                   }else if("<?php echo $resultonoff["keyid"];?>" == '5' && "<?php echo $resultonoff["statdevice"];?>" == "off"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay12v1').set("off");
+                                   }
+                                   if("<?php echo $resultonoff["keyid"];?>" == '6' && "<?php echo $resultonoff["statdevice"];?>" == "on"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay12v2').set("on");
+                                   }else if("<?php echo $resultonoff["keyid"];?>" == '6' && "<?php echo $resultonoff["statdevice"];?>" == "off"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay12v2').set("off");
+                                   }
+                                   if("<?php echo $resultonoff["keyid"];?>" == '7' && "<?php echo $resultonoff["statdevice"];?>" == "on"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay5v1').set("on");
+                                   }else if("<?php echo $resultonoff["keyid"];?>" == '7' && "<?php echo $resultonoff["statdevice"];?>" == "off"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay5v1').set("off");
+                                   }
+                                   if("<?php echo $resultonoff["keyid"];?>" == '8' && "<?php echo $resultonoff["statdevice"];?>" == "on"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay5v2').set("on");
+                                   }else if("<?php echo $resultonoff["keyid"];?>" == '8' && "<?php echo $resultonoff["statdevice"];?>" == "off"){
+                                     firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay5v2').set("off");
+                                   }
                                   </script>
-
                                   <?php
                                   if($resultonoff["statdevice"] == "on"){echo'<fieldset disabled="">';}?>
+
                                   <form action="../php/insertstatusdevice.php" method="post">
                                   <input type="hidden" name="txtuserid" size="20" required autofocus value="<?php echo $_SESSION["userid"]; ?>">
                                   <input type="hidden" name="txtkeyid" size="20" required autofocus value="<?php echo $resultonoff["keyid"]; ?>">
@@ -432,33 +368,6 @@ input:checked + .slider:before {
                                   </form>
                                 </div>
                                   <div class="col-lg-2 col-xs-3">
-                                    <script>
-
-                                    if("<?php echo $resultonoff["statdevice"];?>" == "off" && "<?php echo $resultonoff["keyid"];?>" == "1"){
-                                       firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v1').set("off");
-                                    }
-                                    if("<?php echo $resultonoff["statdevice"];?>" == "off" && "<?php echo $resultonoff["keyid"];?>" == "2"){
-                                       firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v2').set("off");
-                                    }
-                                    if("<?php echo $resultonoff["statdevice"];?>" == "off" && "<?php echo $resultonoff["keyid"];?>" == "3"){
-                                       firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v3').set("off");
-                                    }
-                                    if("<?php echo $resultonoff["statdevice"];?>" == "off" && "<?php echo $resultonoff["keyid"];?>" == "4"){
-                                       firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v4').set("off");
-                                    }
-                                    if("<?php echo $resultonoff["statdevice"];?>" == "off" && "<?php echo $resultonoff["keyid"];?>" == "5"){
-                                       firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay12v1').set("off");
-                                    }
-                                    if("<?php echo $resultonoff["statdevice"];?>" == "off" && "<?php echo $resultonoff["keyid"];?>" == "6"){
-                                       firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay12v2').set("off");
-                                    }
-                                    if("<?php echo $resultonoff["statdevice"];?>" == "off" && "<?php echo $resultonoff["keyid"];?>" == "7"){
-                                       firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay5v1').set("off");
-                                    }
-                                    if("<?php echo $resultonoff["statdevice"];?>" == "off" && "<?php echo $resultonoff["keyid"];?>" == "8"){
-                                       firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay5v2').set("off");
-                                    }
-                                    </script>
                                     <?php
                                     if($resultonoff["statdevice"] == "off"){echo'<fieldset disabled="">';}?>
                                     <form action="../php/insertstatusdevice.php" method="post">
@@ -831,43 +740,34 @@ input:checked + .slider:before {
 </html>
 
     <script>
-    var config = {
-      apiKey: "<?php echo $result["apiKey"]; ?>",
-      authDomain: "<?php echo $result["authDomain"]; ?>",
-      databaseURL: "<?php echo $result["databaseURL"]; ?>",
-      projectId: "<?php echo $result["projectId"]; ?>",
-      storageBucket: "<?php echo $result["storageBucket"]; ?>",
-      messagingSenderId: "<?php echo $result["messagingSenderId"]; ?>"
-    };
-    firebase.initializeApp(config);
+
   //var database = firebase.database();
-  var WaterTemp = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/value/WaterTemp");
-  var PHvalue = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/value/PHvalue");
-  var ECvalue = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/value/ECvalue");
-  var WaterLevel = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/value/WaterAlarm");
-  var AirTemp = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/value/AirTemp");
-  var AirHumid = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/value/AirHumid");
-  var SoilMois = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/value/Soilmois");
-  var Light = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/value/Light");
-  var feedstart = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/feedstart");
-  var feedend = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/feedend");
-  var relay220v1start = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay220v1/starttime");
-  var relay220v1end = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay220v1/endtime");
-  var relay220v2start = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay220v2/starttime");
-  var relay220v2end = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay220v2/endtime");
-  var relay220v3start = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay220v3/starttime");
-  var relay220v3end = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay220v3/endtime");
-  var relay220v4start = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay220v4/starttime");
-  var relay220v4end = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay220v4/endtime");
-  var relay12v1start = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay12v1/starttime");
-  var relay12v1end = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay12v1/endtime");
-  var relay12v2start = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay12v2/starttime");
-  var relay12v2end = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay12v2/endtime");
-  var relay5v1start = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay5v1/starttime");
-  var relay5v1end = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay5v1/endtime");
-  var relay5v2start = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay5v2/starttime");
-  var relay5v2end = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/relay5v2/endtime");
-  var moisture = firebase.database().ref("grow/<?php echo $result["userid"]; ?>/device/moisture");
+  var WaterTemp = firebase.database().ref("<?php echo $result["userid"]; ?>/value/WaterTemp");
+  var PHvalue = firebase.database().ref("<?php echo $result["userid"]; ?>/value/PHvalue");
+  var ECvalue = firebase.database().ref("<?php echo $result["userid"]; ?>/value/ECvalue");
+  var WaterLevel = firebase.database().ref("<?php echo $result["userid"]; ?>/value/WaterAlarm");
+  var AirTemp = firebase.database().ref("<?php echo $result["userid"]; ?>/value/AirTemp");
+  var AirHumid = firebase.database().ref("<?php echo $result["userid"]; ?>/value/AirHumid");
+  var SoilMois = firebase.database().ref("<?php echo $result["userid"]; ?>/value/Soilmois");
+  var feedstart = firebase.database().ref("<?php echo $result["userid"]; ?>/device/feedstart");
+  var feedend = firebase.database().ref("<?php echo $result["userid"]; ?>/device/feedend");
+  var relay220v1start = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay220v1/starttime");
+  var relay220v1end = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay220v1/endtime");
+  var relay220v2start = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay220v2/starttime");
+  var relay220v2end = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay220v2/endtime");
+  var relay220v3start = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay220v3/starttime");
+  var relay220v3end = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay220v3/endtime");
+  var relay220v4start = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay220v4/starttime");
+  var relay220v4end = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay220v4/endtime");
+  var relay12v1start = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay12v1/starttime");
+  var relay12v1end = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay12v1/endtime");
+  var relay12v2start = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay12v2/starttime");
+  var relay12v2end = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay12v2/endtime");
+  var relay5v1start = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay5v1/starttime");
+  var relay5v1end = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay5v1/endtime");
+  var relay5v2start = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay5v2/starttime");
+  var relay5v2end = firebase.database().ref("<?php echo $result["userid"]; ?>/device/relay5v2/endtime");
+  var moisture = firebase.database().ref("<?php echo $result["userid"]; ?>/device/moisture");
   feedstart.on('value', function(snapshot) {
   if(snapshot.val() != null){
   var hour = snapshot.val().substring(0,2);
@@ -1055,92 +955,94 @@ if("<?php echo $result["mode"];?>" == "settime"){
 }
 
   if("<?php echo $result["mode"];?>" == "auto"){
-     firebase.database().ref('grow/<?php echo $result["userid"]; ?>/switchselect').set("auto");
+     firebase.database().ref('/<?php echo $result["userid"]; ?>/switchselect').set("auto");
      //firebase.database().ref('/<?php echo $result["userid"]; ?>/switchselect').update("auto");
   }else if("<?php echo $result["mode"];?>" == "manual"){
-     firebase.database().ref('grow/<?php echo $result["userid"]; ?>/switchselect').set("manual");
+     firebase.database().ref('/<?php echo $result["userid"]; ?>/switchselect').set("manual");
      //firebase.database().ref('/<?php echo $result["userid"]; ?>/switchselect').update("manual");
   }else if("<?php echo $result["mode"];?>" == "settime"){
-     firebase.database().ref('grow/<?php echo $result["userid"]; ?>/switchselect').set("time");
+     firebase.database().ref('/<?php echo $result["userid"]; ?>/switchselect').set("time");
      //firebase.database().ref('/<?php echo $result["userid"]; ?>/switchselect').update("time");
   }else if("<?php echo $result["mode"];?>" == "setmois"){
-     firebase.database().ref('grow/<?php echo $result["userid"]; ?>/switchselect').set("moisture");
+     firebase.database().ref('/<?php echo $result["userid"]; ?>/switchselect').set("moisture");
      //firebase.database().ref('/<?php echo $result["userid"]; ?>/switchselect').update("moisture");
   }else{
-     firebase.database().ref('grow/<?php echo $result["userid"]; ?>/switchselect').set("");
+     firebase.database().ref('/<?php echo $result["userid"]; ?>/switchselect').set("");
      //firebase.database().ref('/<?php echo $result["userid"]; ?>/switchselect').update("");
   }
 
+
+
+
                   function off1() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v1').set("off");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay220v1').update("off");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v1').set("off");
+                           //return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v1').update("off");
                   }
                   function on1() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v1').set("on");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay220v1').update("on");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v1').set("on");
+                           //return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v1').update("on");
                   }
                     //Electric Fan On-Off
                   function off2() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v2').set("off");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay220v2').update("off");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v2').set("off");
+                           //return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v2').update("off");
                   }
                   function on2() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v2').set("on");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay220v2').update("on");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v2').set("on");
+                           //return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v2').update("on");
                   }
                     //Spingker On-Off
                   function off3() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v3').set("off");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay220v3').update("off");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v3').set("off");
+                           //return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v3').update("off");
                   }
                   function on3() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v3').set("on");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay220v3').update("on");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v3').set("on");
+                           //return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v3').update("on");
                   }
                   //Heater On-Off
                   function off4() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v4').set("off");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay220v4').update("off");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v4').set("off");
+                           //return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v4').update("off");
                   }
                   function on4() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay220v4').set("on");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay220v4').update("on");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v4').set("on");
+                          // return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay220v4').update("on");
                   }
                   //Cooler On-Off
                   function off5() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay12v1').set("off");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay12v1').update("off");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay12v1').set("off");
+                           //return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay12v1').update("off");
                   }
                   function on5() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay12v1').set("on");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay12v1').update("on");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay12v1').set("on");
+                           //return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay12v1').update("on");
                   }
 
                   function off6() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay12v2').set("off");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay12v2').update("off");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay12v2').set("off");
+                           //return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay12v2').update("off");
                   }
                   function on6() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay12v2').set("on");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay12v2').update("on");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay12v2').set("on");
+                          // return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay12v2').update("on");
                   }
                   function off7() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay5v1').set("off");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay5v1').update("off");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay5v1').set("off");
+                          // return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay5v1').update("off");
                   }
                   function on7() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay5v1').set("on");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay5v1').update("on");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay5v1').set("on");
+                           //return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay5v1').update("on");
                   }
                   function off8() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay5v2').set("off");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay5v2').update("off");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay5v2').set("off");
+                           //return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay5v2').update("off");
                   }
                   function on8() {
-                           return firebase.database().ref('grow/<?php echo $result["userid"]; ?>/device/relay5v2').set("on");
-                           return firebase.database().ref('/grow/<?php echo $result["userid"]; ?>/device/relay5v2').update("on");
+                           return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay5v2').set("on");
+                           //return firebase.database().ref('/<?php echo $result["userid"]; ?>/device/relay5v2').update("on");
                   }
-
 
      /*-------    JQuery    --------*/
 
@@ -1156,8 +1058,8 @@ if("<?php echo $result["mode"];?>" == "settime"){
                        var minute1 = timeron1.substring(3,5);
                        var timeset1 = hour1+minute1+"00";
                        var updates = {};
-                       updates['grow/<?php echo $result["userid"]; ?>/device/relay220v1/endtime'] = timeset1;
-                       updates['grow/<?php echo $result["userid"]; ?>/device/relay220v1/starttime'] = timeset;
+                       updates['/<?php echo $result["userid"]; ?>/device/relay220v1/endtime'] = timeset1;
+                       updates['/<?php echo $result["userid"]; ?>/device/relay220v1/starttime'] = timeset;
                        return firebase.database().ref().update(updates);
                   });
 
@@ -1171,8 +1073,8 @@ if("<?php echo $result["mode"];?>" == "settime"){
                        var minute1 = timeron1.substring(3,5);
                        var timeset1 = hour1+minute1+"00";
                        var updates = {};
-                       updates['grow/<?php echo $result["userid"]; ?>/device/relay220v2/starttime'] = timeset;
-                       updates['grow/<?php echo $result["userid"]; ?>/device/relay220v2/endtime'] = timeset1;
+                       updates['/<?php echo $result["userid"]; ?>/device/relay220v2/starttime'] = timeset;
+                       updates['/<?php echo $result["userid"]; ?>/device/relay220v2/endtime'] = timeset1;
                        return firebase.database().ref().update(updates);
 
                   });
@@ -1187,8 +1089,8 @@ if("<?php echo $result["mode"];?>" == "settime"){
                        var minute1 = timeron1.substring(3,5);
                        var timeset1 = hour1+minute1+"00";
                        var updates = {};
-                       updates['grow/<?php echo $result["userid"]; ?>/device/relay220v3/starttime'] = timeset;
-                       updates['grow/<?php echo $result["userid"]; ?>/device/relay220v3/endtime'] = timeset1;
+                       updates['/<?php echo $result["userid"]; ?>/device/relay220v3/starttime'] = timeset;
+                       updates['/<?php echo $result["userid"]; ?>/device/relay220v3/endtime'] = timeset1;
                        return firebase.database().ref().update(updates);
                        });
 
@@ -1202,8 +1104,8 @@ if("<?php echo $result["mode"];?>" == "settime"){
                        var minute1 = timeron1.substring(3,5);
                        var timeset1 = hour1+minute1+"00";
                        var updates = {};
-                       updates['grow/<?php echo $result["userid"]; ?>/device/relay220v4/starttime'] = timeset;
-                       updates['grow/<?php echo $result["userid"]; ?>/device/relay220v4/endtime'] = timeset1;
+                       updates['/<?php echo $result["userid"]; ?>/device/relay220v4/starttime'] = timeset;
+                       updates['/<?php echo $result["userid"]; ?>/device/relay220v4/endtime'] = timeset1;
                        return firebase.database().ref().update(updates);
                   });
 
@@ -1217,8 +1119,8 @@ if("<?php echo $result["mode"];?>" == "settime"){
                        var minute1 = timeron1.substring(3,5);
                        var timeset1 = hour1+minute1+"00";
                        var updates = {};
-                       updates['grow/<?php echo $result["userid"]; ?>/device/relay12v1/endtime'] = timeset1;
-                       updates['grow/<?php echo $result["userid"]; ?>/device/relay12v1/starttime'] = timeset;
+                       updates['/<?php echo $result["userid"]; ?>/device/relay12v1/endtime'] = timeset1;
+                       updates['/<?php echo $result["userid"]; ?>/device/relay12v1/starttime'] = timeset;
                        return firebase.database().ref().update(updates);
                         });
 
@@ -1232,8 +1134,8 @@ if("<?php echo $result["mode"];?>" == "settime"){
                          var minute1 = timeron1.substring(3,5);
                          var timeset1 = hour1+minute1+"00";
                          var updates = {};
-                         updates['grow/<?php echo $result["userid"]; ?>/device/relay12v2/endtime'] = timeset1;
-                         updates['grow/<?php echo $result["userid"]; ?>/device/relay12v2/starttime'] = timeset;
+                         updates['/<?php echo $result["userid"]; ?>/device/relay12v2/endtime'] = timeset1;
+                         updates['/<?php echo $result["userid"]; ?>/device/relay12v2/starttime'] = timeset;
                          return firebase.database().ref().update(updates);
                           });
 
@@ -1247,8 +1149,8 @@ if("<?php echo $result["mode"];?>" == "settime"){
                            var minute1 = timeron1.substring(3,5);
                            var timeset1 = hour1+minute1+"00";
                            var updates = {};
-                           updates['grow/<?php echo $result["userid"]; ?>/device/relay5v1/endtime'] = timeset1;
-                           updates['grow/<?php echo $result["userid"]; ?>/device/relay5v1/starttime'] = timeset;
+                           updates['/<?php echo $result["userid"]; ?>/device/relay5v1/endtime'] = timeset1;
+                           updates['/<?php echo $result["userid"]; ?>/device/relay5v1/starttime'] = timeset;
                            return firebase.database().ref().update(updates);
                             });
 
@@ -1262,8 +1164,8 @@ if("<?php echo $result["mode"];?>" == "settime"){
                              var minute1 = timeron1.substring(3,5);
                              var timeset1 = hour1+minute1+"00";
                              var updates = {};
-                             updates['grow/<?php echo $result["userid"]; ?>/device/relay5v2/endtime'] = timeset1;
-                             updates['grow/<?php echo $result["userid"]; ?>/device/relay5v2/starttime'] = timeset;
+                             updates['/<?php echo $result["userid"]; ?>/device/relay5v2/endtime'] = timeset1;
+                             updates['/<?php echo $result["userid"]; ?>/device/relay5v2/starttime'] = timeset;
                              return firebase.database().ref().update(updates);
                               });
 
@@ -1272,14 +1174,11 @@ if("<?php echo $result["mode"];?>" == "settime"){
                           var hour = timeron.substring(0,2);
                           var minute = timeron.substring(3,5);
                           var timeset = hour+minute+"00";
-                          var minuteend = parseInt(minute)+1
-                          var timeend = hour+minuteend+"00"
-
+                          var timeron1 = $("#valuefeed").val();
 
                           var updates = {};
-                          updates['grow/<?php echo $result["userid"]; ?>/device/feedstart'] = timeset;
-                          updates['grow/<?php echo $result["userid"]; ?>/device/feedend'] = timeend;
-
+                          updates['/<?php echo $result["userid"]; ?>/device/feedend'] = timeron1;
+                          updates['/<?php echo $result["userid"]; ?>/device/feedstart'] = timeset;
                           return firebase.database().ref().update(updates);
                            });
 
@@ -1287,7 +1186,7 @@ if("<?php echo $result["mode"];?>" == "settime"){
                              var moisture = $("#valuemoisture").val();
                              var updates = {};
 
-                             updates['grow/<?php echo $result["userid"]; ?>/device/moisture'] = moisture;
+                             updates['/<?php echo $result["userid"]; ?>/device/moisture'] = moisture;
                              return firebase.database().ref().update(updates);
                               });
 });
@@ -1312,6 +1211,12 @@ if("<?php echo $result["mode"];?>" == "settime"){
   g3.refresh(snapshot.val());
   }
 });
+  WaterLevel.on('value', function(snapshot) {
+  //console.log("Humid : "+snapshot.val())
+  if(snapshot.val() <= 100 && snapshot.val() >= 0){
+  g4.refresh(snapshot.val());
+  }
+});
   AirTemp.on('value', function(snapshot) {
   //console.log("Humid : "+snapshot.val())
   if(snapshot.val() <= 100 && snapshot.val() >= 0){
@@ -1329,28 +1234,6 @@ if("<?php echo $result["mode"];?>" == "settime"){
   if(snapshot.val() <= 100 && snapshot.val() >= 0){
   g7.refresh(snapshot.val());
   }
-});
-
-Light.on('value', function(snapshot) {
-//  console.log("Temp : "+snapshot.val())
-if(snapshot.val() == 0){
-   document.getElementById("water").innerHTML = "";
-}
-if(snapshot.val() == 1){
-  document.getElementById("water").innerHTML = "checked";
-}
-});
-
-WaterLevel.on('value', function(snapshot) {
-//console.log("Humid : "+snapshot.val())
-if(snapshot.val() == 'FALSE'){
-  snapshot.val() = 0
-  document.getElementById("water").innerHTML = "";
-}
-if(0>1){
-  snapshot.val() = 1
-  document.getElementById("water").innerHTML = checked;
-}
 });
 
 
